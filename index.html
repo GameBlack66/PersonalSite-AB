@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Validation de l'Utilisateur</title>
+    
+    <!-- ICI ON MET LE CSS (LE STYLE) -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Classe pour cacher le contenu du site tant qu'on n'a pas le code */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECTION 1 : L'ÉCRAN DE CONNEXION -->
+    <div id="login-screen" class="container">
+        <h1>🔒 Validation de l'Utilisateur</h1>
+        <p>Pour vérifier que vous n'êtes pas une personne malveillante, veuillez entrer le code secret.</p>
+        
+        <input type="password" id="userCode" placeholder="Entrez le code ici...">
+        <br>
+        <button onclick="verifierCode()">Entrer</button>
+        <p id="error-msg" style="color: red; display: none;">Code incorrect ! Essayez encore.</p>
+    </div>
+
+    <!-- SECTION 2 : LE CONTENU DE TON SITE (Caché par défaut) -->
+    <div id="site-content" class="hidden" style="width: 100%; height: 100%; background: white; padding: 20px;">
+        <h1>Bienvenue sur mon site ! 🎉</h1>
+        <p>Vous avez réussi à passer la sécurité.</p>
+        <p>Ici, tu peux mettre tout le reste de ton site web...</p>
+    </div>
+
+    <!-- ICI ON MET LE JAVASCRIPT (LA LOGIQUE) -->
+    <script>
+        // 1. Définition du bon code (Change "1234" par ce que tu veux)
+        const LE_BON_CODE = "ABSBC662BGMBMWM1234"; 
+
+        function verifierCode() {
+            // Récupérer ce que l'utilisateur a écrit
+            let codeEntre = document.getElementById("userCode").value;
+            
+            // Vérifier si c'est le bon
+            if (codeEntre === LE_BON_CODE) {
+                // Si c'est bon : on cache l'écran de connexion et on montre le site
+                document.getElementById("login-screen").classList.add("hidden");
+                document.getElementById("site-content").classList.remove("hidden");
+                
+                // Optionnel : changer le fond de la page pour le site
+                document.body.style.backgroundColor = "#ffffff";
+                document.body.style.display = "block"; // Enlever le centrage vertical
+            } else {
+                // Si c'est faux : on affiche un message d'erreur
+                document.getElementById("error-msg").style.display = "block";
+                
+                // Petit effet de secousse (optionnel)
+                let input = document.getElementById("userCode");
+                input.style.border = "2px solid red";
+            }
+        }
+
+        // Permettre de valider avec la touche "Entrée" du clavier
+        document.getElementById("userCode").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                verifierCode();
+            }
+        });
+    </script>
+
+</body>
+</html>
